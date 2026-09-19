@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../domain/models/booking.dart';
 import '../../../core/widgets/booking_card.dart';
 import '../view_models/bookings_view_model.dart';
 

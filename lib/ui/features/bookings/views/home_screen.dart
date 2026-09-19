@@ -5,7 +5,6 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../domain/models/booking.dart';
 import '../../../core/app_theme.dart';
-import '../../../core/widgets/booking_card.dart';
 import '../view_models/bookings_view_model.dart';
 import 'calendar_bookings_view.dart';
 import 'kanban_bookings_view.dart';

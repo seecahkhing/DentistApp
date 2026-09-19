@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../data/repositories/booking_repository.dart';
-import '../../../data/services/reminder_service.dart';
-import '../../../domain/models/booking.dart';
+import '../../../../data/repositories/booking_repository.dart';
+import '../../../../data/services/reminder_service.dart';
+import '../../../../domain/models/booking.dart';
 
 enum PeriodFilter { week, month }
 

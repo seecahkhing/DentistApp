@@ -1,5 +1,5 @@
 import 'reminder_service.dart';
-import 'reminder_service_stub.dart'
-    if (dart.library.io) 'reminder_service_io.dart';
 
-ReminderService createReminderService() => createReminderServiceImpl();
+/// Local OS notifications were removed to avoid iOS SPM bundle build failures.
+/// Reminders are stored on the booking and surfaced in-app on the home screen.
+ReminderService createReminderService() => NoopReminderService();
