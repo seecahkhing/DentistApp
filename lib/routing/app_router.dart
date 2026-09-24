@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -6,8 +7,11 @@ import '../ui/features/bookings/views/booking_form_screen.dart';
 import '../ui/features/bookings/views/home_screen.dart';
 import '../ui/features/bookings/view_models/bookings_view_model.dart';
 
+final rootNavigatorKey = GlobalKey<NavigatorState>();
+
 GoRouter createRouter() {
   return GoRouter(
+    navigatorKey: rootNavigatorKey,
     routes: [
       GoRoute(
         path: '/',

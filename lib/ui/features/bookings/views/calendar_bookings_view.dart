@@ -15,7 +15,7 @@ class CalendarBookingsView extends StatelessWidget {
     final vm = context.watch<BookingsViewModel>();
     final format = vm.period == PeriodFilter.week
         ? CalendarFormat.week
-        : CalendarFormat.month;
+        : CalendarFormat.month; // month + year filters use month grid
 
     return Column(
       children: [

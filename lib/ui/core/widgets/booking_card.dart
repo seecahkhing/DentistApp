@@ -22,48 +22,75 @@ class BookingCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(14),
+        child: IntrinsicHeight(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Container(width: 3, color: AppTheme.teal),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      booking.fullName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        letterSpacing: -0.2,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 52,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              DateFormat.jm().format(booking.scheduledAt),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                                letterSpacing: -0.2,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              DateFormat.MMMd().format(booking.scheduledAt),
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: AppTheme.muted,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${DateFormat.MMMd().format(booking.scheduledAt)} · ${formatTime(booking.scheduledAt)}',
-                      style: TextStyle(
-                        color: Colors.black.withValues(alpha: 0.55),
-                        fontSize: 13,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              booking.fullName,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15,
+                                letterSpacing: -0.25,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Wrap(
+                              spacing: 6,
+                              runSpacing: 6,
+                              children: [
+                                _Chip(booking.status.label, emphasized: true),
+                                if (booking.price != null)
+                                  _Chip(formatMoney(booking.price)),
+                                if (booking.hasInsurance)
+                                  _Chip(booking.insuranceName ?? 'Insured'),
+                                if (booking.reminderAt != null)
+                                  const _Chip('Reminder'),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: [
-                        _Chip(booking.status.label),
-                        if (booking.price != null)
-                          _Chip(formatMoney(booking.price)),
-                        if (booking.hasInsurance)
-                          _Chip(booking.insuranceName ?? 'Insured'),
-                        if (booking.reminderAt != null) const _Chip('Reminder'),
-                      ],
-                    ),
-                  ],
+                      if (trailing != null) trailing!,
+                    ],
+                  ),
                 ),
               ),
-              if (trailing != null) trailing!,
             ],
           ),
         ),
@@ -73,24 +100,28 @@ class BookingCard extends StatelessWidget {
 }
 
 class _Chip extends StatelessWidget {
-  const _Chip(this.label);
+  const _Chip(this.label, {this.emphasized = false});
 
   final String label;
+  final bool emphasized;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: AppTheme.teal.withValues(alpha: 0.08),
+        color: emphasized
+            ? AppTheme.teal.withValues(alpha: 0.1)
+            : Colors.black.withValues(alpha: 0.04),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
         label,
-        style: const TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-          color: AppTheme.teal,
+        style: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w600,
+          color: emphasized ? AppTheme.tealDark : AppTheme.muted,
+          letterSpacing: 0.1,
         ),
       ),
     );

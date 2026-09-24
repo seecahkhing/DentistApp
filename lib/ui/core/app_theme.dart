@@ -2,45 +2,54 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 final class AppTheme {
-  static const Color teal = Color(0xFF0F766E);
-  static const Color cream = Color(0xFFF7F6F3);
-  static const Color ink = Color(0xFF1C1B19);
+  static const Color teal = Color(0xFF0D9488);
+  static const Color tealDark = Color(0xFF0F766E);
+  static const Color surface = Color(0xFFFAFAF9);
+  static const Color ink = Color(0xFF18181B);
+  static const Color muted = Color(0xFF71717A);
 
   static ThemeData light() {
     final scheme = ColorScheme.fromSeed(
       seedColor: teal,
       brightness: Brightness.light,
-      surface: cream,
+      surface: surface,
     );
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: scheme,
-      scaffoldBackgroundColor: cream,
+      scaffoldBackgroundColor: surface,
       appBarTheme: const AppBarTheme(
-        backgroundColor: cream,
+        backgroundColor: surface,
         foregroundColor: ink,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
         titleTextStyle: TextStyle(
-          fontSize: 22,
+          fontSize: 20,
           fontWeight: FontWeight.w600,
           color: ink,
-          letterSpacing: -0.4,
+          letterSpacing: -0.5,
         ),
       ),
       cardTheme: CardThemeData(
         color: Colors.white,
         elevation: 0,
+        margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: Colors.black.withValues(alpha: 0.06)),
+          borderRadius: BorderRadius.circular(14),
+          side: BorderSide(color: Colors.black.withValues(alpha: 0.05)),
         ),
+      ),
+      dividerTheme: DividerThemeData(
+        color: Colors.black.withValues(alpha: 0.06),
+        space: 1,
+        thickness: 1,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Colors.white,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.08)),
@@ -54,18 +63,12 @@ final class AppTheme {
           borderSide: const BorderSide(color: teal, width: 1.5),
         ),
       ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: teal,
         foregroundColor: Colors.white,
         elevation: 0,
-      ),
-      segmentedButtonTheme: SegmentedButtonThemeData(
-        style: ButtonStyle(
-          visualDensity: VisualDensity.compact,
-          shape: WidgetStatePropertyAll(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-        ),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     );
   }

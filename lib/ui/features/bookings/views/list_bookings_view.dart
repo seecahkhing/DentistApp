@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../domain/models/booking.dart';
+import '../../../core/app_theme.dart';
 import '../../../core/widgets/booking_card.dart';
 import '../view_models/bookings_view_model.dart';
 
@@ -18,8 +19,8 @@ class ListBookingsView extends StatelessWidget {
     if (bookings.isEmpty) {
       return Center(
         child: Text(
-          'No bookings in this ${vm.period == PeriodFilter.week ? 'week' : 'month'}',
-          style: TextStyle(color: Colors.black.withValues(alpha: 0.45)),
+          'No bookings this ${vm.period.label.toLowerCase()}',
+          style: const TextStyle(color: AppTheme.muted, fontSize: 14),
         ),
       );
     }
@@ -48,9 +49,11 @@ class ListBookingsView extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
               child: Text(
                 DateFormat.EEEE().add_MMMd().format(day),
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
-                  color: Colors.black.withValues(alpha: 0.55),
+                  fontSize: 12,
+                  letterSpacing: 0.2,
+                  color: AppTheme.muted,
                 ),
               ),
             ),

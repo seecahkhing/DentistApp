@@ -6,6 +6,7 @@ import 'data/repositories/booking_repository.dart';
 import 'data/services/reminder_service_factory.dart';
 import 'routing/app_router.dart';
 import 'ui/core/app_theme.dart';
+import 'ui/core/widgets/in_app_reminder_listener.dart';
 import 'ui/features/bookings/view_models/bookings_view_model.dart';
 
 Future<void> main() async {
@@ -16,7 +17,7 @@ Future<void> main() async {
     repository: BookingRepository(AppDatabase()),
     reminderService: reminders,
   );
-  await viewModel.load();
+  viewModel.startWatching();
   runApp(DentalBookingApp(viewModel: viewModel));
 }
 
@@ -33,14 +34,22 @@ class _DentalBookingAppState extends State<DentalBookingApp> {
   late final _router = createRouter();
 
   @override
+  void dispose() {
+    widget.viewModel.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookingsViewModel>.value(
       value: widget.viewModel,
-      child: MaterialApp.router(
-        title: 'Dental Booking',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.light(),
-        routerConfig: _router,
+      child: InAppReminderListener(
+        child: MaterialApp.router(
+          title: 'Dental Booking',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.light(),
+          routerConfig: _router,
+        ),
       ),
     );
   }
