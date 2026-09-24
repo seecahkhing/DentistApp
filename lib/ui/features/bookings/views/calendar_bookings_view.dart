@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../../domain/models/booking.dart';
 import '../../../core/app_theme.dart';
 import '../../../core/widgets/booking_card.dart';
 import '../view_models/bookings_view_model.dart';
@@ -39,10 +40,32 @@ class CalendarBookingsView extends StatelessWidget {
               color: AppTheme.teal,
               shape: BoxShape.circle,
             ),
-            markerDecoration: const BoxDecoration(
-              color: AppTheme.teal,
-              shape: BoxShape.circle,
-            ),
+            markersMaxCount: 4,
+          ),
+          calendarBuilders: CalendarBuilders(
+            markerBuilder: (context, day, events) {
+              if (events.isEmpty) return null;
+              return Padding(
+                padding: const EdgeInsets.only(top: 34),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (final event in events.take(4))
+                      Container(
+                        width: 5,
+                        height: 5,
+                        margin: const EdgeInsets.symmetric(horizontal: 1),
+                        decoration: BoxDecoration(
+                          color: AppTheme.accentForStatus(
+                            (event as Booking).status,
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
         const Divider(height: 1),

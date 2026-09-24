@@ -54,6 +54,8 @@ class _KanbanColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.watch<BookingsViewModel>();
     final items = vm.byStatus(status);
+    final accent = AppTheme.accentForStatus(status);
+    final isCancelled = status == BookingStatus.cancelled;
 
     return DragTarget<Booking>(
       onWillAcceptWithDetails: (details) => details.data.status != status,
@@ -67,12 +69,16 @@ class _KanbanColumn extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: highlight
-                ? AppTheme.teal.withValues(alpha: 0.08)
+                ? accent.withValues(alpha: 0.1)
+                : isCancelled
+                ? AppTheme.cancelledSurface
                 : Colors.white,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: highlight
-                  ? AppTheme.teal
+                  ? accent
+                  : isCancelled
+                  ? AppTheme.cancelled.withValues(alpha: 0.2)
                   : Colors.black.withValues(alpha: 0.06),
             ),
           ),
@@ -83,9 +89,16 @@ class _KanbanColumn extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(6, 4, 6, 10),
                 child: Row(
                   children: [
+                    if (isCancelled) ...[
+                      Icon(Icons.cancel_outlined, size: 16, color: accent),
+                      const SizedBox(width: 6),
+                    ],
                     Text(
                       status.label,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: isCancelled ? accent : AppTheme.ink,
+                      ),
                     ),
                     const Spacer(),
                     Text(

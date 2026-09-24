@@ -73,6 +73,20 @@ class BookingDetailScreen extends StatelessWidget {
                 ChoiceChip(
                   label: Text(status.label),
                   selected: booking.status == status,
+                  selectedColor: AppTheme.chipColorsForStatus(status).background,
+                  labelStyle: TextStyle(
+                    color: booking.status == status
+                        ? AppTheme.chipColorsForStatus(status).foreground
+                        : AppTheme.muted,
+                    fontWeight: booking.status == status
+                        ? FontWeight.w600
+                        : FontWeight.w500,
+                  ),
+                  side: status == BookingStatus.cancelled
+                      ? BorderSide(
+                          color: AppTheme.cancelled.withValues(alpha: 0.35),
+                        )
+                      : null,
                   onSelected: (_) {
                     context.read<BookingsViewModel>().setStatus(
                       booking.id,
@@ -118,7 +132,11 @@ class _Hero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cancelled = booking.status == BookingStatus.cancelled;
+    final accent = AppTheme.accentForStatus(booking.status);
+
     return Card(
+      color: cancelled ? AppTheme.cancelledSurface : Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(
@@ -126,17 +144,45 @@ class _Hero extends StatelessWidget {
           children: [
             Text(
               booking.fullName,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
                 letterSpacing: -0.4,
+                decoration: cancelled ? TextDecoration.lineThrough : null,
+                decorationColor: AppTheme.cancelled.withValues(alpha: 0.45),
+                color: cancelled
+                    ? AppTheme.cancelled.withValues(alpha: 0.95)
+                    : AppTheme.ink,
               ),
             ),
             const SizedBox(height: 6),
             Text(
               '${booking.status.label} · ${formatDate(booking.scheduledAt)}',
-              style: TextStyle(color: Colors.black.withValues(alpha: 0.55)),
+              style: TextStyle(
+                color: cancelled
+                    ? AppTheme.cancelled
+                    : Colors.black.withValues(alpha: 0.55),
+                fontWeight: cancelled ? FontWeight.w600 : FontWeight.normal,
+              ),
             ),
+            if (cancelled) ...[
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: accent.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Text(
+                  'This appointment was cancelled',
+                  style: TextStyle(
+                    color: AppTheme.cancelled,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
