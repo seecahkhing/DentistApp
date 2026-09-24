@@ -45,7 +45,7 @@ class _DentalBookingAppState extends State<DentalBookingApp> {
       value: widget.viewModel,
       child: InAppReminderListener(
         child: MaterialApp.router(
-          title: 'Dental Booking',
+          title: 'Aerea',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light(),
           routerConfig: _router,

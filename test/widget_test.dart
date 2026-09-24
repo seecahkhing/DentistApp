@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('home shows Dental Booking', (tester) async {
+  testWidgets('home shows bookings', (tester) async {
     final db = AppDatabase.memory();
     addTearDown(db.close);
     final vm = BookingsViewModel(
