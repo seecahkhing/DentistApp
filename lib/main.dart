@@ -1,3 +1,6 @@
+import 'package:firebase_app_distribution/firebase_app_distribution.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +14,8 @@ import 'ui/features/bookings/view_models/bookings_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await _checkForAppDistributionUpdate();
   final reminders = createReminderService();
   await reminders.init();
   final viewModel = BookingsViewModel(
@@ -19,6 +24,19 @@ Future<void> main() async {
   );
   viewModel.startWatching();
   runApp(DentalBookingApp(viewModel: viewModel));
+}
+
+Future<void> _checkForAppDistributionUpdate() async {
+  if (kIsWeb) return;
+  if (defaultTargetPlatform != TargetPlatform.android &&
+      defaultTargetPlatform != TargetPlatform.iOS) {
+    return;
+  }
+  try {
+    await updateIfNewReleaseAvailable();
+  } catch (_) {
+    // Non-Firebase builds (e.g. local debug without google-services) can ignore.
+  }
 }
 
 class DentalBookingApp extends StatefulWidget {

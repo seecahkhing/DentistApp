@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1085471426543",
+    "project_id": "aerea-dental-app",
+    "storage_bucket": "aerea-dental-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085471426543:android:39f372026f3efbfdf3981a",
+        "android_client_info": {
+          "package_name": "com.dentalbooking.dental_booking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNCEfq9VBXKwKRzpo-a0OD_CBwESnY3IQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.appdistribution")
 }
 
 android {
@@ -27,6 +29,7 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        missingDimensionStrategy("default", "production")
     }
 
     buildTypes {
@@ -34,6 +37,11 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+            firebaseAppDistribution {
+                artifactType = "APK"
+                // Set tester groups in Firebase console, then uncomment:
+                // groups = "internal-testers"
+            }
         }
     }
 }
